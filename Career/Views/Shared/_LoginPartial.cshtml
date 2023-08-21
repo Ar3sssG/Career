@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <div class="dropdown">
+                <a class="btn btn-outline-light dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-person"></i>  @User.Identity.Name
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="">
+                    <li><a class="dropdown-item" asp-action="Profile" asp-controller="User"><i class="bi bi-person-circle text-success"> </i>Profile</a></li>
+                    <li><a class="dropdown-item" href="#" id="logout"><i class="bi bi-door-open-fill text-danger"> </i>Logout</a></li>
+                </ul>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-action="Register" asp-controller="User">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-light" asp-action="Login" asp-controller="User">Login</a>
+        </li>
+    }
+</ul>
+
+<div class="modal fade" id="logoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Log out</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to exit?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+                <form asp-controller="User" asp-action="Logout" method="post">
+                    <input type="submit" value="Log out" class="btn btn-outline-warning">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

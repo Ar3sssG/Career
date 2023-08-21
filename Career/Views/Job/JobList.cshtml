@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CareerCommon.CareerViewModels.JobsViewModel>
+
+@{
+    ViewData["Title"] = "JobsList";
+}
+
+<h1 class="display-4">Jobs</h1>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success">Filter by</li>
+            </ul>
+            <ul class="list-group" id="industriesList">
+            </ul>
+            <div class="sticky-top">
+                <a href="#"><h2><i class="bi bi-arrow-up-circle-fill text-success"></i></h2></a>
+            </div>
+        </div>
+        <div class="col-md-9 min-vh-100">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="searchBar">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Sort by</button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" id="sortPost" href="#">Post Date</a></li>
+                            <li><a class="dropdown-item" id="sortDead" href="#">DeadLine</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <ol class="list-group list-group" id="listGroup">
+                <partial name="_List">
+            </ol>
+        </div>
+
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="~/js/JobsList.js"></script>
+    <script>
+    var getIndustries = '@Url.Action("GetIndustries","Job")'
+        var getProfession = '@Url.Action("GetProfessions","Job")'
+        var getJobsList = '@Url.Action("JobList","Job")'
+    </script>
+}

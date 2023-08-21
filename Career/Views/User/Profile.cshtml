@@ -1,0 +1,79 @@
+﻿@model CareerCommon.CareerViewModels.UserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1 class="display-4">Profile</h1>
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav flex-column sticky-top">
+                <li class="nav-item">
+                    <hr />
+                    <a class="nav-link text-success" asp-action="JobList" asp-controller="Job">Find Job</a>
+                    <hr />
+                </li>
+                <li class="nav-item">
+                    <hr />
+                    <a class="nav-link text-success" href="#">Profile</a>
+                    <hr />
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10 d-flex flex-column min-vh-100">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item fw-bold">@Html.DisplayNameFor(model => model.ID)</li>
+                <li class="list-group-item">@Html.DisplayFor(model => model.ID)</li>
+                <li class="list-group-item fw-bold">@Html.DisplayNameFor(model => model.FullName)</li>
+                <li class="list-group-item">@Html.DisplayFor(model => model.FullName)</li>
+                <li class="list-group-item fw-bold">@Html.DisplayNameFor(model => model.RegisterDate)</li>
+                <li class="list-group-item">@Html.DisplayFor(model => model.RegisterDate)</li>
+            </ul>
+            <div>
+                <br />
+            </div>
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Posted Jobs
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapses collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush" id="postedJobs">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Jobs Applications
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <ul class="list-group list-group-flush" id="jobsApplications">
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/UserProfile.js"></script>
+    <script>
+        var getPostedJobs = '@Url.Action("GetProfilePostedJobs", "User" ,new { userId = Model.ID})';
+        var getApplications = '@Url.Action("GetProfileApplications", "User", new { userId = Model.ID })';
+    </script>
+}
+

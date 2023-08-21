@@ -1,0 +1,33 @@
+﻿@model List<CareerCommon.CareerViewModels.JobApplicationsViewModel>
+
+@if (Model.Count() == 0)
+{
+    <li class="list-group-item d-flex justify-content-between align-items-start text-danger">
+        You do not have Jobs Applications =(
+    </li>
+}
+@foreach (var item in Model)
+{
+    if (item.AppliedJob.IsActive)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><a href="#" style="text-decoration:none;color:forestgreen">@item.AppliedJob.Title</a></div>
+                @item.AppliedJob.IndustryName
+            </div>
+            <span class="badge bg-danger rounded-pill">Deactivated</span>
+        </li>
+    }
+    else
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold"><a href="#" style="text-decoration:none;color:forestgreen">@item.AppliedJob.Title</a></div>
+                @item.AppliedJob.IndustryName
+                <br />
+                <div style="color:red">Deadline : @Html.DisplayFor(model => item.AppliedJob.DeadLine)</div>
+            </div>
+            <span class="badge bg-success rounded-pill">Applied</span>
+        </li>
+    }
+}

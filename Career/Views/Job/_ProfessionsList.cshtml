@@ -1,0 +1,9 @@
+﻿@model IEnumerable<CareerCommon.CareerViewModels.ProfessionsViewModel>
+
+@foreach (var item in Model)
+{
+    <li class="list-group-item list-group-item-success" style="overflow: hidden;">
+        <input class="form-check-input me-1" type="checkbox" value="@item.ID" onchange="filterBy(this,value)">
+        @item.Name
+    </li>
+}

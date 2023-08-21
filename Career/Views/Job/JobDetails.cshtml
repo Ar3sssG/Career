@@ -1,0 +1,137 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+@model CareerCommon.CareerViewModels.JobsViewModel
+@inject SignInManager<User> SignInManager
+
+@{
+    ViewData["Title"] = "Job details";
+}
+
+<div class="container">
+    <div class="row">
+        <div>
+            <h4 class="display-5">Job details</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                </dt>
+                <dd class="col-sm-10 display-6 text-success">
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt class="col-sm-2"></dt>
+                <dd class="col-sm-10"></dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.Requirements)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Requirements)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.Responsibilities)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Responsibilities)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.PostedDate)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.PostedDate)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.DeadLine)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.DeadLine)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.IsActive)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.IndustryName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.IndustryName)
+                </dd>
+                <dt class="col-sm-2 text-success">
+                    @Html.DisplayNameFor(model => model.ProfessionName)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.ProfessionName)
+                </dd>
+                <dt class="col-sm-2"><br /></dt>
+                <dd class="col-sm-10"><br /></dd>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <dt class="col-sm-2">
+
+                    </dt>
+                    <dd class="col-sm-10">
+                        <div class="d-grid gap-2">
+                            @if (int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) == Model.UserID)
+                            {
+                                <div class="text-success">Applications Count : @Model.Applications.Count()</div>
+                                <a class="btn btn-outline-primary">Edit</a>
+                                if (!Model.IsActive)
+                                {
+                                    <a class="btn btn-success" id="deactivateBtn">Activate</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-danger" id="deactivateBtn">Deactivate</a>
+                                }
+                            }
+                            else if (Model.Applications.Any(x => x.UserID == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)))
+                            {
+                                <a class="btn btn-outline-success disabled">Applied</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-outline-success" asp-action="ApplicationToJob" asp-controller="Job" asp-route-jobId="@Model.ID" asp-route-userId="@int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value)">Apply</a>
+                            }
+                        </div>
+                    </dd>
+                }
+            </dl>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal " id="deactivateModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Job deactivate</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to deactivate this job?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+                <a type="button" class="btn btn-danger" asp-action="JobDeactivate" asp-controller="Job" asp-route-jobId="@Model.ID">Deactivate</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/JobDetails.js"></script>
+}

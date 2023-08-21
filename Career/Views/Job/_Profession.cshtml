@@ -1,0 +1,6 @@
+﻿@model List<CareerCommon.CareerViewModels.ProfessionsViewModel>
+
+@foreach (var item in Model)
+{
+    <option value="@item.ID">@item.Name</option>
+}
